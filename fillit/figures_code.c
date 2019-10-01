@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:35:15 by blavonne          #+#    #+#             */
-/*   Updated: 2019/09/28 21:31:11 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:24:32 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,23 @@ int 	*recode(int *code, int len)
 
 int	*move_up_left(int *code)
 {
-	while (code[0] != 1 && (code[1] == code[0] + 3 || code[2] == code[0] + 3))
-	{
-		code[0]--;
-		code[1]--;
-		code[2]--;
-		code[3]--;
-	}
-	while (code[0] != 0 && (code[1] != code[0] + 3 || code[2] != code[0] + 3))
-	{
-		code[0]--;
-		code[1]--;
-		code[2]--;
-		code[3]--;
-	}
+	if ((code[1] == code[0] + 1 && code[2] == code[0] + 3)\
+	|| code[1] == code[0] + 3)
+		while (code[0] != 1)
+		{
+			code[0]--;
+			code[1]--;
+			code[2]--;
+			code[3]--;
+		}
+	else
+		while (code[0] != 0)
+		{
+			code[0]--;
+			code[1]--;
+			code[2]--;
+			code[3]--;
+		}
 	return (code);
 }
 
@@ -110,4 +113,9 @@ void	display_code(t_figure *head)
 		printf("\n");
 		head = head->next;
 	}
+}
+
+int 	count_figures(char *figures)
+{
+	return ((int)ft_strlen(figures) / 16);
 }
