@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 17:44:25 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/01 16:38:31 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/09/28 20:18:50 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void		ft_fg_addback(t_figure **head, t_figure *new)
 	phead = tmp;
 	while (tmp->next)
 		tmp = tmp->next;
+	new->prev = tmp;
 	tmp->next = new;
 	*head = phead;
 }
@@ -42,11 +43,11 @@ void		lst_clean(t_figure **head)
 	free (head);
 }
 
-t_figure	*create_fg(t_figure **head, int board_len)
+t_figure	*create_fg(t_figure **fhead, int board_len)
 {
 	t_figure	*figure;
 
-	if (!*head)
+	if (!*fhead)
 	{
 		if (!(figure = (t_figure *)malloc(sizeof(t_figure))))
 			return (NULL);
@@ -54,8 +55,10 @@ t_figure	*create_fg(t_figure **head, int board_len)
 			return (NULL);
 		figure->board_len = board_len;
 		figure->next = NULL;
-		*head = figure;
-		return (*head);
+		figure->prev = NULL;
+		figure->position = 0;
+		*fhead = figure;
+		return (*fhead);
 	}
 	if (!(figure = (t_figure *)malloc(sizeof(t_figure))))
 		return (NULL);
@@ -63,6 +66,7 @@ t_figure	*create_fg(t_figure **head, int board_len)
 		return (NULL);
 	figure->board_len = board_len;
 	figure->next = NULL;
-	ft_fg_addback(head, figure);
-	return (*head);
+	figure->position = 0;
+	ft_fg_addback(fhead, figure);
+	return (*fhead);
 }

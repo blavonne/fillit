@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 17:37:41 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/01 16:38:31 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/01 17:53:32 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int main(int argc, char **argv)
 	int 		board_len;
 	int 		i;
 	char 		*board;
+	t_solution	*solution_vector;
 
 	i = 0;
 	if (full_validation(argv[1], &figures))
@@ -38,6 +39,8 @@ int main(int argc, char **argv)
 		display_code(head);
 		if (!(board = generate_board(board_len)))
 			return (-1);
+		if (!(solution_vector = create_solution_head(head, board)))
+			return (1);
 
 	}
 	return 0;
