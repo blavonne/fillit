@@ -27,4 +27,4 @@ add_executable(fillit
         libft/ft_lstdelone.c
         libft/ft_atoi.c
         fillit/figures_list.c
-        libft/ft_sqrt.c fillit/figures_code.c)
+        libft/ft_sqrt.c fillit/figures_code.c fillit/salvation.c fillit/solutions_list.c)
