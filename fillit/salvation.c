@@ -18,7 +18,7 @@ char	*generate_board(int board_len)
 
 	if (!(board = ft_strnew(board_len * board_len)))
 		return (NULL);
-	board = ft_memset(board, '0', board_len * board_len);
+	board = ft_memset(board, '.', board_len * board_len);
 	return (board);
 }
 

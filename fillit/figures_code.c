@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:35:15 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/01 15:24:32 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/05 03:42:45 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int		set_code(t_figure **head, char *figures, int board_len)
 		if (!(code = get_code(figures)))
 			return (0);
 		code = move_up_left(code);
-		if (board_len > 4)
+		if (board_len != 4)
 			code = recode(code, board_len);
 		tmp->code = ft_memcpy(tmp->code, code, sizeof(int) * 4);
 		free(code);
@@ -99,7 +99,9 @@ int		set_code(t_figure **head, char *figures, int board_len)
 void	display_code(t_figure *head)
 {
 	int 	i;
+	int 	len;
 
+	len = head->board_len;
 	printf("\n");
 	while (head)
 	{
@@ -113,6 +115,7 @@ void	display_code(t_figure *head)
 		printf("\n");
 		head = head->next;
 	}
+	printf("BOARD LEN %d\n", len);
 }
 
 int 	count_figures(char *figures)
