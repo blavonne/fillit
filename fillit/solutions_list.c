@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:15:37 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/05 06:54:10 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/07 16:34:24 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,17 @@ t_solution	*add_solution(int *insertion, t_figure *cur_fg, t_solution **shead, c
 	return (*shead);
 }
 
+t_solution	*step_back(t_solution **head)
+{
+	t_solution *tmp;
+
+	tmp = (*head)->up;
+	free((*head)->board);
+	free(*head);
+	(*head) = tmp;
+	return (*head);
+}
+
 char	*generate_solution(int board_len, t_figure *fhead, t_solution *shead)
 {
 	t_figure	*cur_figure;
@@ -131,15 +142,12 @@ char	*generate_solution(int board_len, t_figure *fhead, t_solution *shead)
 				if (cur_figure->letter == 'A')
 					return (NULL);
 				cur_figure = cur_figure->prev;
-				//free(cur_solution->board);
-				//cur_solution->board = NULL;
 				if (cur_solution->up == shead)
 					return (NULL);
 				else
-					cur_solution = cur_solution->up;
+					cur_solution = step_back(&shead);
 			}
 		}
-		//free(cur_board);
 	}
 	return (cur_solution->board);
 }
