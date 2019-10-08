@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 17:44:25 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/08 17:52:25 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/08 21:49:50 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		lst_clean(t_figure **head)
 	free (head);
 }
 
-t_figure	*create_fg(t_figure **fhead, int board_len)
+t_figure	*create_fg(t_figure **fhead)
 {
 	t_figure	*figure;
 
@@ -49,7 +49,6 @@ t_figure	*create_fg(t_figure **fhead, int board_len)
 			return (NULL);
 		if (!(figure->code = (int *)malloc(sizeof(int) * 4)))
 			return (NULL);
-		figure->board_len = board_len;
 		figure->next = NULL;
 		figure->prev = NULL;
 		figure->position = 0;
@@ -60,7 +59,6 @@ t_figure	*create_fg(t_figure **fhead, int board_len)
 		return (NULL);
 	if (!(figure->code = (int *)malloc(sizeof(int) * 4)))
 		return (NULL);
-	figure->board_len = board_len;
 	figure->next = NULL;
 	figure->position = 0;
 	ft_fg_addback(fhead, figure);

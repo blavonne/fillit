@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 19:20:14 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/08 20:17:52 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/08 20:29:59 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		prepare_input(char **figures, t_solution **shead, t_figure **fhead,
 	i = 0;
 	while (i++ < count_figures(figures))
 	{
-		if (!(*fhead = create_fg(fhead, board_len)))
+		if (!(*fhead = create_fg(fhead)))
 		{
 			lst_clean(fhead);
 			return (0);
