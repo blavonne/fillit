@@ -16,6 +16,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "get_next_line.h"
 
 /*
 ** 1st part.................................................................
@@ -108,5 +109,6 @@ int					ft_isspace(int c);
 void				ft_swap(int *a, int *b);
 int					ft_sqrt(int nb);
 int					ft_pow(int base, int power);
+void				ft_put_errmsg(char *msg);
 
 #endif

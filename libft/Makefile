@@ -6,7 +6,7 @@
 #    By: blavonne <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/11 18:43:11 by blavonne          #+#    #+#              #
-#    Updated: 2019/09/18 20:20:05 by blavonne         ###   ########.fr        #
+#    Updated: 2019/10/08 20:17:17 by blavonne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC = ft_strlen.c ft_strdup.c ft_strcpy.c ft_strncpy.c ft_strcat.c\
 	   ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c\
 	   ft_toupper.c ft_itoa.c ft_memcpy.c ft_lstnew.c ft_lstdelone.c\
 	   ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_lstadd_back.c\
-	   ft_isspace.c ft_swap.c ft_sqrt.c ft_pow.c
+	   ft_isspace.c ft_swap.c ft_sqrt.c ft_pow.c get_next_line.c\
+	   ft_put_errmsg;
 OS = $(SRC:%.c=%.o)
 F = -Wall -Werror -Wextra -c
 all: $(NAME)
@@ -37,5 +38,3 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 re: fclean all
-cp:
-	cp -Ra libft.h Makefile ft* ../../42FileChecker/libft/
