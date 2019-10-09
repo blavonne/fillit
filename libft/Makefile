@@ -6,7 +6,7 @@
 #    By: blavonne <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/11 18:43:11 by blavonne          #+#    #+#              #
-#    Updated: 2019/10/08 21:59:57 by blavonne         ###   ########.fr        #
+#    Updated: 2019/10/09 21:19:45 by blavonne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC = ft_strlen.c ft_strdup.c ft_strcpy.c ft_strncpy.c ft_strcat.c\
 	   ft_toupper.c ft_itoa.c ft_memcpy.c ft_lstnew.c ft_lstdelone.c\
 	   ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_lstadd_back.c\
 	   ft_isspace.c ft_swap.c ft_sqrt.c ft_pow.c get_next_line.c\
-	   ft_put_errmsg.c;
+	   ft_put_errmsg.c
 OS = $(SRC:%.c=%.o)
 F = -Wall -Werror -Wextra -c
 all: $(NAME)
