@@ -6,18 +6,18 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:35:15 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/05 03:42:45 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/11 20:16:50 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
 
-int *get_code(const char *figure)
+static int	*get_code(const char *figure)
 {
-	int 	i;
-	int 	j;
-	int 	*code;
+	int		i;
+	int		j;
+	int		*code;
 
 	if (!(code = (int *)malloc(sizeof(int) * 4)))
 		return (NULL);
@@ -32,9 +32,9 @@ int *get_code(const char *figure)
 	return (code);
 }
 
-int 	*recode(int *code, int len)
+static int	*recode(int *code, int len)
 {
-	int 	i;
+	int		i;
 
 	i = 1;
 	while (i < 4)
@@ -50,7 +50,7 @@ int 	*recode(int *code, int len)
 	return (code);
 }
 
-int	*move_up_left(int *code)
+static int	*move_up_left(int *code)
 {
 	if ((code[1] == code[0] + 1 && code[2] == code[0] + 3)\
 	|| code[1] == code[0] + 3)
@@ -72,11 +72,11 @@ int	*move_up_left(int *code)
 	return (code);
 }
 
-int		set_code(t_figure **head, char *figures, int board_len)
+int			set_code(t_figure **head, char *figures, int board_len)
 {
 	int			*code;
 	t_figure	*tmp;
-	char 		letter;
+	char		letter;
 
 	letter = 'A';
 	tmp = *head;
@@ -94,9 +94,4 @@ int		set_code(t_figure **head, char *figures, int board_len)
 		figures = figures + 16;
 	}
 	return (1);
-}
-
-int 	count_figures(char **figures)
-{
-	return ((int)ft_strlen(*figures) / 16);
 }

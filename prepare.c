@@ -6,13 +6,13 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 19:20:14 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/11 18:25:37 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/11 20:01:16 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-char	*generate_board(int board_len)
+static char	*generate_board(int board_len)
 {
 	char	*board;
 
@@ -22,31 +22,52 @@ char	*generate_board(int board_len)
 	return (board);
 }
 
-int		prepare_input(char **figures, t_solution **shead, t_figure **fhead,
+static int	count_figures(char **figures)
+{
+	return ((int)ft_strlen(*figures) / 16);
+}
+
+static void	del_all_fgs(t_figure **fhead)
+{
+	t_figure	*phead;
+	t_figure	*tmp;
+
+	phead = *fhead;
+	while (phead)
+	{
+		tmp = phead->next;
+		free(phead->code);
+		free(phead);
+		phead = tmp;
+	}
+	free(fhead);
+}
+
+int			prepare_input(char **figures, t_solution **shead, t_figure **fhead,
 		int board_len)
 {
 	int		i;
-	char 	*board;
+	char	*board;
 
 	i = 0;
 	while (i++ < count_figures(figures))
 	{
-		if (!(*fhead = create_fg(fhead)))
+		if (!(create_fg(fhead)))
 		{
-			lst_clean(fhead);
+			del_all_fgs(fhead);
 			*fhead = NULL;
 			return (0);
 		}
 	}
-	set_code(fhead, *figures, board_len);
-	if (!(board = generate_board(board_len)))
+	if (!set_code(fhead, *figures, board_len) ||
+	!(board = generate_board(board_len)))
 		return (0);
-	if (!(*shead = create_solution_head(*fhead, board, board_len)))
+	if (!(*shead = create_solution_head(board, board_len)))
 		return (0);
 	return (1);
 }
 
-void	clean_all(t_solution **shead, t_figure **fhead)
+void		clean_all(t_solution **shead, t_figure **fhead)
 {
 	t_solution	*stmp;
 	t_figure	*ftmp;
@@ -68,49 +89,3 @@ void	clean_all(t_solution **shead, t_figure **fhead)
 	}
 	*fhead = NULL;
 }
-
-void	display_solve(char *solve, int board_len)
-{
-	int 	i;
-
-	if (!solve || !*solve)
-		return ;
-	while (*solve)
-	{
-		i = 0;
-		while (i < board_len)
-			ft_putchar(solve[i++]);
-		ft_putchar('\n');
-		solve = solve + board_len;
-	}
-}
-
-//int		get_solution(char *argv)
-//{
-//	char	*figures;
-//	char	*solve;
-//	int 	board_len;
-//	t_solution	*shead;
-//	t_figure	*fhead;
-//
-//	shead = NULL;
-//	fhead = NULL;
-//	if (!(figures = read_file(argv)) || !check_fg_qq(&figures) || !check_fg_coherence(&figures))
-//	{
-//		put_error();
-//		return (0);
-//	}
-//	if (prepare_input(&figures, &shead, &fhead, get_board_len(&figures)))
-//	{
-//		board_len = shead->board_len;
-//		while (!(solve = generate_solution(board_len, &fhead, &shead)))
-//		{
-//			board_len++;
-//			clean_all(&shead, &fhead, &solve);
-//			prepare_input(&figures, &shead, &fhead, board_len);
-//		}
-//		display_solve(solve, board_len);
-//		return (1);
-//	}
-//	return (0);
-//}
