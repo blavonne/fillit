@@ -8,9 +8,10 @@ add_executable(fillit
         read.c
         fillit.h
         figures_code.c
-        figures_list.c
+        t_figure.c
         salvation.c
-        solutions_list.c checks.c libft/ft_put_errmsg.c)
+        t_solution.c
+        checks.c)
 
 target_link_libraries(fillit
         LINK_PUBLIC ${CMAKE_SOURCE_DIR}/libft/libft.a)

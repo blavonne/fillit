@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 17:35:15 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/08 21:49:50 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/11 16:59:40 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ t_solution	*create_solution_head(t_figure *fhead, char *board, int board_len);
 char		*generate_solution(int board_len, t_figure **fhead,
 			t_solution **shead);
 int			check_coherence(int board_len, int *insertion);
-int			get_solution(char *argv);
-void		clean_all(t_solution **shead, t_figure **fhead, char **solve);
+void		clean_all(t_solution **shead, t_figure **fhead);
 int			prepare_input(char **figures, t_solution **shead, t_figure **fhead,
 			int board_len);
 void		display_solve(char *solve, int board_len);

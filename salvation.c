@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 19:20:14 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/08 20:29:59 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/11 17:38:23 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		prepare_input(char **figures, t_solution **shead, t_figure **fhead,
 		if (!(*fhead = create_fg(fhead)))
 		{
 			lst_clean(fhead);
+			*fhead = NULL;
 			return (0);
 		}
 	}
@@ -45,13 +46,11 @@ int		prepare_input(char **figures, t_solution **shead, t_figure **fhead,
 	return (1);
 }
 
-void	clean_all(t_solution **shead, t_figure **fhead, char **solve)
+void	clean_all(t_solution **shead, t_figure **fhead)
 {
 	t_solution	*stmp;
 	t_figure	*ftmp;
 
-	free(*solve);
-	*solve = NULL;
 	while (*shead)
 	{
 		stmp = *shead;
@@ -74,6 +73,8 @@ void	display_solve(char *solve, int board_len)
 {
 	int 	i;
 
+	if (!solve || !*solve)
+		return ;
 	while (*solve)
 	{
 		i = 0;
@@ -84,32 +85,32 @@ void	display_solve(char *solve, int board_len)
 	}
 }
 
-int		get_solution(char *argv)
-{
-	char	*figures;
-	char	*solve;
-	int 	board_len;
-	t_solution	*shead;
-	t_figure	*fhead;
-
-	shead = NULL;
-	fhead = NULL;
-	if (!(figures = read_file(argv)) || !check_fg_qq(&figures) || !check_fg_coherence(&figures))
-	{
-		put_error();
-		return (0);
-	}
-	if (prepare_input(&figures, &shead, &fhead, get_board_len(&figures)))
-	{
-		board_len = shead->board_len;
-		while (!(solve = generate_solution(board_len, &fhead, &shead)))
-		{
-			board_len++;
-			clean_all(&shead, &fhead, &solve);
-			prepare_input(&figures, &shead, &fhead, board_len);
-		}
-		display_solve(solve, board_len);
-		return (1);
-	}
-	return (0);
-}
+//int		get_solution(char *argv)
+//{
+//	char	*figures;
+//	char	*solve;
+//	int 	board_len;
+//	t_solution	*shead;
+//	t_figure	*fhead;
+//
+//	shead = NULL;
+//	fhead = NULL;
+//	if (!(figures = read_file(argv)) || !check_fg_qq(&figures) || !check_fg_coherence(&figures))
+//	{
+//		put_error();
+//		return (0);
+//	}
+//	if (prepare_input(&figures, &shead, &fhead, get_board_len(&figures)))
+//	{
+//		board_len = shead->board_len;
+//		while (!(solve = generate_solution(board_len, &fhead, &shead)))
+//		{
+//			board_len++;
+//			clean_all(&shead, &fhead, &solve);
+//			prepare_input(&figures, &shead, &fhead, board_len);
+//		}
+//		display_solve(solve, board_len);
+//		return (1);
+//	}
+//	return (0);
+//}
