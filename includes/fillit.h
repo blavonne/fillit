@@ -12,7 +12,7 @@
 
 #ifndef FILLIT_H
 # define FILLIT_H
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 char					*read_file(char *argv);
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "../includes/fillit.h"
 
 static int	*insert_figure(int position, char **board, int board_len, int *code)
 {
@@ -93,7 +93,7 @@ char		*generate_solution(int board_len, t_figure **fhead,
 	while (cur_figure)
 	{
 		cur_board = (*shead)->board;
-		while (cur_figure->position < ft_strlen(cur_board) &&
+		while (cur_figure->position < (int)ft_strlen(cur_board) &&
 		!(insertion = insert_figure(cur_figure->position,
 				&cur_board, board_len, cur_figure->code)))
 			cur_figure->position++;

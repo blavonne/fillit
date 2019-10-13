@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
-#include <stdio.h>
+#include "../includes/fillit.h"
 
 static int	*get_code(const char *figure)
 {

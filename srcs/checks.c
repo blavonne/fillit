@@ -6,11 +6,11 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 20:09:03 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/11 20:11:24 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/14 00:54:59 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "../includes/fillit.h"
 
 int		check_insertion_coherence(int board_len, int *insertion)
 {

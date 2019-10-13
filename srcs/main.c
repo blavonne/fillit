@@ -6,12 +6,11 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 17:37:41 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/11 20:12:24 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/13 22:31:07 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "fillit.h"
+#include "../includes/fillit.h"
 
 static void	display_solve(char *solve, int board_len)
 {
@@ -39,7 +38,7 @@ static int	get_board_len(char **figures)
 	return (ft_sqrt((int)ft_strlen(*figures) / 4 + i));
 }
 
-static void	put_error(void)
+static void	put_usage(void)
 {
 	ft_put_errmsg("Herzlich willcommen!\nTo run the program your ");
 	ft_put_errmsg("figures map should be valid. Make sure,\n");
@@ -51,7 +50,22 @@ static void	put_error(void)
 	ft_put_errmsg("e) there are only 4 coherent \"#\" in one square;\n");
 	ft_put_errmsg("f) quantity of figures is less than 27.\n");
 	ft_put_errmsg("Here's the example:\n");
-	ft_put_errmsg("....\n#...\n#...\n##..");
+	ft_put_errmsg("....\n#...\n#...\n##..\n");
+}
+
+static void	validation(int argc, char **argv, char **figures)
+{
+	if (argc != 2)
+	{
+		put_usage();
+		exit(1);
+	}
+	if (!(*figures = read_file(argv[1])) ||
+		!check_fg_qq(figures) || !check_fg_coherence(figures))
+	{
+		ft_putstr("error\n");
+		exit(2);
+	}
 }
 
 int			main(int argc, char **argv)
@@ -64,15 +78,10 @@ int			main(int argc, char **argv)
 
 	shead = NULL;
 	fhead = NULL;
-	if (argc != 2 || !(figures = read_file(argv[1])) ||
-	!check_fg_qq(&figures) || !check_fg_coherence(&figures))
-	{
-		put_error();
-		return (0);
-	}
+	validation(argc, argv, &figures);
 	board_len = get_board_len(&figures);
 	while (prepare_input(&figures, &shead, &fhead, board_len)
-	&& !(solve = generate_solution(board_len, &fhead, &shead)))
+		&& !(solve = generate_solution(board_len, &fhead, &shead)))
 	{
 		board_len++;
 		clean_all(&shead, &fhead);
