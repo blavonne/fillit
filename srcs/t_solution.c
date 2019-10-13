@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   solutions_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/08 20:30:39 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/09 21:22:20 by blavonne         ###   ########.fr       */
+/*   Created: 2019/10/01 17:15:37 by blavonne          #+#    #+#             */
+/*   Updated: 2019/10/11 19:59:39 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "fillit.h"
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+t_solution	*create_solution_head(char *board, int board_len)
 {
-	size_t		i;
+	t_solution	*shead;
 
-	i = 0;
-	while ((s1[i] || s2[i]) && i < n)
-	{
-		if (s1[i] == s2[i])
-			i++;
-		else
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-	}
-	return (0);
+	if (!(shead = (t_solution *)malloc(sizeof(t_solution))))
+		return (NULL);
+	shead->lvl = 0;
+	shead->board = board;
+	shead->up = NULL;
+	shead->board_len = board_len;
+	return (shead);
 }
