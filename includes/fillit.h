@@ -18,13 +18,14 @@ char					*read_file(char *argv);
 
 int						check_fg_qq(char **figures);
 int						check_fg_coherence(char **figures);
-int						check_insertion_coherence(int board_len,
+int						check_insertion_coherence(int len,
 							int *insertion);
 
 typedef struct			s_figure
 {
 	char				letter;
 	int					*code;
+	int 				width;
 	int					position;
 	struct s_figure		*next;
 	struct s_figure		*prev;

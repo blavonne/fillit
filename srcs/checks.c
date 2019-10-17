@@ -6,32 +6,36 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 20:09:03 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/14 00:54:59 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/18 01:33:53 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
 
-int		check_insertion_coherence(int board_len, int *insertion)
+int		check_insertion_coherence(int len, int *ins)
 {
 	int		i;
+	int		j;
+	int		count;
 
-	i = 0;
-	while (i < 3)
+	i = -1;
+	count = 0;
+	while (++i < 4)
 	{
-		if (insertion[i] % board_len == board_len - 1 &&
-			!(insertion[i + 1] % board_len))
-			return (0);
-		if (insertion[i + 1] == insertion[i] + 1 ||\
-		insertion[i + 1] == insertion[i] - 1 ||\
-		insertion[i + 1] == insertion[i] + board_len - 1 ||\
-		insertion[i + 1] == insertion[i] + board_len ||\
-		insertion[i + 1] == insertion[i] + board_len - 2)
-			i++;
-		else
-			return (0);
+		j = -1;
+		while (++j < 4)
+		{
+			if (ins[i] == ins[j] + 1 || ins[i] == ins[j] - 1 || ins[i] ==
+			ins[j] + len || ins[i] == ins[j] - len)
+				count++;
+			if ((len > 2 && ins[i] == ins[j] - 1 && ins[i] % len == len - 1
+			&& !(ins[j] % len)) && !(len == 3 && ins[3] == ins[0] + len))
+				return (0);
+		}
 	}
-	return (1);
+	if (count >= 6 && !(count % 2))
+		return (1);
+	return (0);
 }
 
 int		check_fg_qq(char **figures)
@@ -72,11 +76,10 @@ int		check_fg_coherence(char **figures)
 	i = 0;
 	while (start[i])
 	{
-		while (i < 16 && (start[i] == '.' || (start[i] == '#' &&\
-		((start[i + 1] && start[i + 1] == '#') ||\
-		(start[i - 1] && start[i - 1] == '#') ||\
-		(start[i + 4] && start[i + 4] == '#') ||\
-		(start[i - 4] && start[i - 4] == '#')))))
+		while (i < 16 && (start[i] == '.' || (start[i] == '#' && ((start[i +
+		1] && start[i + 1] == '#') || (start[i - 1] && start[i - 1] == '#')
+		|| (start[i + 4] && start[i + 4] == '#') || (start[i - 4] && start[i
+		- 4] == '#')))))
 			i++;
 		if (i == 16)
 		{
@@ -86,5 +89,9 @@ int		check_fg_coherence(char **figures)
 		else
 			return (0);
 	}
+	if (((*figures)[17] == '#' && (*figures)[21] == '#' && (*figures)[26] ==
+	'#' && (*figures)[30] == '#') || ((*figures)[5] == '#' && (*figures)[6]
+	== '#' && (*figures)[13] == '#' && (*figures)[14] == '#'))
+		return (0);
 	return (1);
 }

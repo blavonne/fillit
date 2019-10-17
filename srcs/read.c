@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 17:15:21 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/13 22:25:59 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/18 00:24:16 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*read_file(char *argv)
 	l = 1;
 	figures = ft_strnew(0);
 	tmp = NULL;
-	fd = open("/Users/blavonne/CLionProjects/fillit/qwerty", O_RDONLY);
+	fd = open(argv, O_RDONLY);
 	while ((figures_ptr = figures) && get_next_line(fd, &tmp) > 0 && l++)
 	{
 		figures = ft_strjoin(figures, tmp);

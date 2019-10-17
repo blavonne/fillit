@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:35:15 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/11 20:16:50 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/18 00:17:55 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	*get_code(const char *figure)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < 16)
+	while (i < 16 && j < 4)
 	{
 		if (figure[i] == '#')
 			code[j++] = i;
@@ -51,24 +51,38 @@ static int	*recode(int *code, int len)
 
 static int	*move_up_left(int *code)
 {
-	if ((code[1] == code[0] + 1 && code[2] == code[0] + 3)\
-	|| code[1] == code[0] + 3)
-		while (code[0] != 1)
-		{
-			code[0]--;
-			code[1]--;
-			code[2]--;
-			code[3]--;
-		}
-	else
-		while (code[0] != 0)
-		{
-			code[0]--;
-			code[1]--;
-			code[2]--;
-			code[3]--;
-		}
+	while ((code[0] / 4) && (code[1] / 4) && (code[2] / 4) && (code[3] / 4))
+	{
+		code[0] -= 4;
+		code[1] -= 4;
+		code[2] -= 4;
+		code[3] -= 4;
+	}
+	while ((code[0] % 4) && (code[1] % 4) && (code[2] % 4) && (code[3] % 4))
+	{
+		code[0]--;
+		code[1]--;
+		code[2]--;
+		code[3]--;
+	}
 	return (code);
+}
+
+static void	set_width(t_figure **tmp, int *code)
+{
+	int		i;
+	int		width;
+
+	i = 0;
+	width = 0;
+	while (i < 4)
+	{
+		if ((code[i] % 4) > width)
+			width = code[i] % 4;
+		i++;
+	}
+	width++;
+	(*tmp)->width = width;
 }
 
 int			set_code(t_figure **head, char *figures, int board_len)
@@ -84,11 +98,12 @@ int			set_code(t_figure **head, char *figures, int board_len)
 		if (!(code = get_code(figures)))
 			return (0);
 		code = move_up_left(code);
+		set_width(&tmp, code);
 		if (board_len != 4)
 			code = recode(code, board_len);
 		tmp->code = ft_memcpy(tmp->code, code, sizeof(int) * 4);
-		free(code);
 		tmp->letter = letter++;
+		free(code);
 		tmp = tmp->next;
 		figures = figures + 16;
 	}
