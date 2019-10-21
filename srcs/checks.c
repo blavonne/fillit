@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 20:09:03 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/18 01:45:19 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/18 01:33:53 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int		check_insertion_coherence(int len, int *ins)
 			if (ins[i] == ins[j] + 1 || ins[i] == ins[j] - 1 || ins[i] ==
 			ins[j] + len || ins[i] == ins[j] - len)
 				count++;
-			if ((len > 2 && ins[i] == ins[j] - 1 && ins[i] % len == len - 1
-			&& !(ins[j] % len)) && !(len == 3 && ins[3] == ins[0] + len))
+			if ((len > 3 && ins[i] == ins[j] - 1 && ins[i] % len == len - 1
+			&& !(ins[j] % len)))
 				return (0);
 		}
 	}

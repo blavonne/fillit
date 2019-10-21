@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 19:21:19 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/18 01:45:19 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/18 23:16:43 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ static int	step_back(t_solution **shead, t_figure **cur_fg)
 		free(*shead);
 		(*shead) = tmp;
 	}
+	if ((*shead)->lvl > 1 && (*cur_fg)->code[0] == (*cur_fg)->prev->code[0] &&
+	(*cur_fg)->code[1] == (*cur_fg)->prev->code[1] && (*cur_fg)->code[2] ==
+	(*cur_fg)->prev->code[2] && (*cur_fg)->code[3] == (*cur_fg)->prev->code[3])
+		step_back(shead, cur_fg);
 	return (1);
 }
 
