@@ -6,11 +6,12 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 19:21:19 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/21 13:18:54 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:59:34 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
+#include <stdio.h>
 
 static int	*insert_figure(int position, char **board, int board_len, int *code)
 {
@@ -23,7 +24,8 @@ static int	*insert_figure(int position, char **board, int board_len, int *code)
 	if (!(insertion = (int *)malloc(sizeof(int) * 4)))
 		return (NULL);
 	j = 0;
-	while (j < 4 && (*board)[code[j] + (position - code[0])] == '.')
+	while (j < 4 && code[j] + (position - code[0]) < board_len * board_len &&
+	(*board)[code[j] + (position - code[0])] == '.')
 	{
 		insertion[j] = code[j] + (position - code[0]);
 		j++;
@@ -54,10 +56,11 @@ static int	step_back(t_solution **shead, t_figure **cur_fg)
 		free(*shead);
 		(*shead) = tmp;
 	}
-	if ((*shead)->lvl > 1 && (*cur_fg)->code[0] == (*cur_fg)->prev->code[0] &&
-	(*cur_fg)->code[1] == (*cur_fg)->prev->code[1] && (*cur_fg)->code[2] ==
-	(*cur_fg)->prev->code[2] && (*cur_fg)->code[3] == (*cur_fg)->prev->code[3])
-		step_back(shead, cur_fg);
+//	printf("%s\n", (*shead)->board);
+//	if ((*shead)->lvl > 1 && (*cur_fg)->code[0] == (*cur_fg)->prev->code[0] &&
+//	(*cur_fg)->code[1] == (*cur_fg)->prev->code[1] && (*cur_fg)->code[2] ==
+//	(*cur_fg)->prev->code[2] && (*cur_fg)->code[3] == (*cur_fg)->prev->code[3])
+//		return (step_back(shead, cur_fg));
 	return (1);
 }
 

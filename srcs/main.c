@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 17:37:41 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/21 13:18:54 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/18 00:28:55 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ static void	validation(int argc, char **argv, char **figures)
 		put_usage();
 		exit(1);
 	}
-	if (!(*figures = read_file(argv[1])) ||
-		!check_fg_qq(figures) || !check_fg_coherence(figures))
+	if (!(*figures = open_and_read(argv[1])))
 	{
 		ft_putstr("error\n");
 		exit(2);

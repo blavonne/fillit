@@ -6,46 +6,103 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 17:15:21 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/21 13:18:54 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/24 18:20:49 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
 #include "../includes/fillit.h"
+#include <fcntl.h>
+#include <stdlib.h>
 
-char	*read_file(char *argv)
+static size_t	check_line(size_t n, char *str, size_t *num)
 {
-	char	*tmp;
-	char	*figures;
-	char	*figures_ptr;
-	int		fd;
-	int		l;
+	size_t	i;
+	size_t	len;
 
-	l = 0;
-	figures = ft_strnew(0);
-	tmp = NULL;
-	fd = open("/Users/blavonne/CLionProjects/fillit/qwerty", O_RDONLY);
-	while (++l && (figures_ptr = figures) && get_next_line(fd, &tmp) > 0)
+	len = ft_strlen(str);
+	i = 0;
+	if ((n + 1) % 5 != 0)
 	{
+		if (len != 4 || *num > 4)
+			return (0);
+		while (i++ < 4)
+			if (str[i - 1] != '.')
+			{
+				if (str[i - 1] == '#')
+					(*num)++;
+				else
+					return (0);
+			}
+	}
+	if ((((n + 1) % 5 == 0) && len != 0) || ((n + 1) % 5 == 4 && *num != 4))
+		return (0);
+	return (1);
+}
 
-		figures = ft_strjoin(figures, tmp);
-		free(figures_ptr);
-		if (!ft_strlen(tmp) && l % 5)
+static size_t	check_position(char *str)
+{
+	size_t	i;
+	size_t	s;
+
+	i = 0;
+	s = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '#' && (i > 3) && (str[i - 4] == '#'))
+			s++;
+		if (str[i] == '#' && (i < 12) && (str[i + 4] == '#'))
+			s++;
+		if (str[i] == '#' && (i % 4 != 0) && (str[i - 1] == '#'))
+			s++;
+		if (str[i] == '#' && (i + 1) % 4 != 0 && (str[i + 1] == '#'))
+			s++;
+		if (++i == 16)
 		{
-			free(tmp);
-			close(fd);
-			free(figures);
-			return (NULL);
+			if (s != 6 && s != 8)
+				return (0);
+			s = 0;
+			i = 0;
+			str += 16;
 		}
+	}
+	return (1);
+}
+
+static char		*read_and_check(int fd)
+{
+	char	*ret;
+	char	*tmp;
+	char	*buf;
+	size_t	n;
+	size_t	num;
+
+	n = 0;
+	ret = ft_strnew(0);
+	while (get_next_line(fd, &buf) > 0)
+	{
+		if (n % 5 == 0)
+			num = 0;
+		if (!check_line(n, buf, &num))
+			return (NULL);
+		n++;
+		tmp = ret;
+		ret = ft_strjoin(ret, buf);
+		free(buf);
 		free(tmp);
 	}
-	close(fd);
-	free(tmp);
-	if (l != ft_strlen(figures) / 16 * 5)
-	{
-		free(figures);
+	if (ft_strlen(ret) % 16 || n % 5 != 4 || n > 129)
 		return (NULL);
-	}
-	return (figures);
+	return (ret);
+}
+
+char			*open_and_read(char *av)
+{
+	int		fd;
+	char	*ret;
+
+	if ((fd = open(av, O_RDONLY)) == -1)
+		return (NULL);
+	if (!(ret = read_and_check(fd)) || !check_position(ret))
+		return (NULL);
+	return (ret);
 }

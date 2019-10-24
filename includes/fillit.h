@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 17:35:15 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/21 13:18:54 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/10/24 14:42:50 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 # define FILLIT_H
 # include "../libft/libft.h"
 
-char					*read_file(char *argv);
-
-int						check_fg_qq(char **figures);
-int						check_fg_coherence(char **figures);
+char					*open_and_read(char *av);
 int						check_insertion_coherence(int len,
 							int *insertion);
 
@@ -25,7 +22,7 @@ typedef struct			s_figure
 {
 	char				letter;
 	int					*code;
-	int 				width;
+	int					width;
 	int					position;
 	struct s_figure		*next;
 	struct s_figure		*prev;
