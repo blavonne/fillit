@@ -85,6 +85,7 @@ void		clean_all(t_solution **shead, t_figure **fhead)
 		ftmp = *fhead;
 		(*fhead) = (*fhead)->next;
 		free(ftmp->code);
+		free(ftmp->height);
 		free(ftmp);
 	}
 	*fhead = NULL;
