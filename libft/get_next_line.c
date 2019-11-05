@@ -3,117 +3,107 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azomega <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/19 17:30:40 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/24 19:43:00 by blavonne         ###   ########.fr       */
+/*   Created: 2019/09/16 17:55:49 by azomega           #+#    #+#             */
+/*   Updated: 2019/10/29 18:12:31 by azomega          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
 
-static t_buff	*find_fd(t_list **list, int fd)
+static void		ft_freedellst(t_list **fd_lst, int fd)
 {
-	t_list	*tmp;
-	t_buff	*data;
+	t_list	*prev;
+	t_list	*head;
 
-	tmp = *list;
-	while (tmp)
+	prev = NULL;
+	head = *fd_lst;
+	while (head)
 	{
-		if (((t_buff*)tmp->content)->fd == fd)
-			return (tmp->content);
-		tmp = tmp->next;
+		if (head->content_size == (size_t)fd)
+		{
+			if (prev)
+				prev->next = head->next;
+			else
+				*fd_lst = head->next;
+			ft_strdel((char **)&(head->content));
+			head->content_size = 0;
+			free(head);
+			return ;
+		}
+		prev = head;
+		head = head->next;
 	}
-	if (!(data = (t_buff*)malloc(sizeof(t_buff))))
-		return (NULL);
-	data->buff = NULL;
-	data->fd = fd;
-	if (!(tmp = ft_lstnew(data, sizeof(t_buff))))
-	{
-		free(data);
-		return (NULL);
-	}
-	free(data);
-	ft_lstadd(list, tmp);
-	return ((*list)->content);
 }
 
-static int		ft_read_line(char **ostatok, int fd, char **line)
+static t_list	*ft_find_fd(t_list **fd_lst, int fd)
 {
-	char	buff[BUFF_SIZE + 1];
-	char	*tmp;
-	char	*str;
-	size_t	size;
+	t_list	*head;
+	t_list	*new;
+	t_list	*fd_found;
 
-	size = 1;
-	while (size)
+	if (!fd_lst)
+		return (NULL);
+	head = *fd_lst;
+	while (head)
 	{
-		if ((tmp = ft_strchr(*ostatok, '\n')))
-			*tmp++ = '\0';
-		str = ft_strjoin(*line, *ostatok);
+		if (head->content_size == (size_t)fd)
+			return (fd_found = head);
+		head = head->next;
+	}
+	if (!(new = ft_lstnew("", 1)))
+		return (NULL);
+	new->content_size = fd;
+	ft_lstadd(fd_lst, new);
+	return (*fd_lst);
+}
+
+static int		ft_read_one_line(t_list *fd_found, char **line, const int fd)
+{
+	char	buf[BUFF_SIZE + 1];
+	size_t	rd;
+	char	*tmp;
+	char	*ret;
+
+	rd = 1;
+	while (rd > 0)
+	{
+		if ((ret = ft_strchr(fd_found->content, '\n')))
+			*ret++ = '\0';
+		if (!(tmp = ft_strjoin(*line, fd_found->content)))
+			return (-1);
 		free(*line);
-		if (tmp && !(tmp = ft_strdup(tmp)))
+		*line = tmp;
+		if (ret && !(ret = ft_strdup(ret)))
 			return (-1);
-		free(*ostatok);
-		if (!(*line = str))
-			return (-1);
-		if ((*ostatok = tmp))
+		free(fd_found->content);
+		if ((fd_found->content = ret))
 			return (1);
-		if (!(size = read(fd, buff, BUFF_SIZE)) && ft_strlen(*line))
-			return (1);
-		if (!(*ostatok = ft_strsub(buff, 0, size)))
+		rd = read(fd, buf, BUFF_SIZE);
+		if (!(fd_found->content = ft_strsub(buf, 0, rd)))
 			return (-1);
 	}
 	return (0);
 }
 
-static void		ft_del_one(void *cont, size_t size)
-{
-	free(((t_buff *)cont)->buff);
-	free(cont);
-	if (size)
-		return ;
-}
-
-static void		ft_del_fd(t_list **head, int fd)
-{
-	t_list	*prev;
-	t_list	*tmp;
-
-	tmp = *head;
-	if (((t_buff*)tmp->content)->fd == fd)
-	{
-		*head = (*head)->next;
-		ft_lstdelone(&tmp, &ft_del_one);
-		return ;
-	}
-	while (((t_buff *)(*head)->content)->fd != fd)
-	{
-		prev = *head;
-		*head = (*head)->next;
-	}
-	prev->next = (*head)->next;
-	ft_lstdelone(head, &ft_del_one);
-	*head = tmp;
-}
-
 int				get_next_line(const int fd, char **line)
 {
-	static t_list	*head;
-	t_buff			*tmp;
-	int				rd;
+	static t_list	*fd_lst = 0;
+	t_list			*fd_found;
+	int				retval;
 
-	if (!line || fd < 0 || read(fd, NULL, 0) < 0)
+	if (fd < 0 || !line || read(fd, NULL, 0) == -1)
 		return (-1);
-	if (!(tmp = find_fd(&head, fd)))
-		return (-1);
-	if (!tmp->buff)
-		if (!(tmp->buff = ft_strnew(0)))
-			return (-1);
 	if (!(*line = ft_strnew(0)))
 		return (-1);
-	if ((rd = ft_read_line(&(tmp->buff), fd, line)) <= 0)
-		ft_del_fd(&head, fd);
-	return (rd);
+	if (!(fd_found = ft_find_fd(&fd_lst, fd)))
+		return (-1);
+	if ((retval = ft_read_one_line(fd_found, line, fd)) == 0)
+	{
+		if (ft_strlen(*line) > 0)
+			return (1);
+		ft_freedellst(&fd_lst, fd);
+	}
+	return (retval);
 }

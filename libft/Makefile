@@ -6,7 +6,7 @@
 #    By: blavonne <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/11 18:43:11 by blavonne          #+#    #+#              #
-#    Updated: 2019/10/24 19:43:00 by blavonne         ###   ########.fr        #
+#    Updated: 2019/10/29 16:57:47 by blavonne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ all: $(NAME)
 $(NAME): $(OS)
 	ar rcs $(NAME) $(OS)
 %.o: %.c
-	gcc -I libft.h $F $< -o $@
+	gcc $F $< -o $@
 clean:
 	rm -rf $(OS)
 fclean: clean

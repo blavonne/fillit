@@ -6,34 +6,25 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 20:09:03 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/24 19:43:00 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/11/05 11:24:06 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
-
-int		check_insertion_coherence(int len, int *ins)
+int		check_insertion_coherence(int len, int *ins, char *height)
 {
 	int		i;
 	int		j;
-	int		count;
 
-	i = -1;
-	count = 0;
-	while (++i < 4)
+	i = 0;
+	while (i + 1 < 4)
 	{
-		j = -1;
-		while (++j < 4)
-		{
-			if (ins[i] == ins[j] + 1 || ins[i] == ins[j] - 1 || ins[i] ==
-																ins[j] + len || ins[i] == ins[j] - len)
-				count++;
-			if ((len > 3 && ins[i] == ins[j] - 1 && ins[i] % len == len - 1
-				 && !(ins[j] % len)))
+		j = i + 1;
+		if (ins[i] % len == len - 1 && !(ins[j] % len))
+			if (ins[0] / len - ins[1] / len + '0' != height[0] || ins[0] /
+			len - ins[2] / len + '0' != height[1] || ins[0] / len - ins[3] /
+			len + '0' != height[2])
 				return (0);
-		}
+		i++;
 	}
-	if (count >= 6 && !(count % 2))
-		return (1);
-	return (0);
+	return (1);
 }

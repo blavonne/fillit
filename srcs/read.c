@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_read.c                                          :+:      :+:    :+:   */
+/*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/26 17:15:21 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/24 19:43:00 by blavonne         ###   ########.fr       */
+/*   Created: 2019/11/05 09:58:23 by blavonne          #+#    #+#             */
+/*   Updated: 2019/11/05 09:58:23 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
+#include "fillit.h"
 #include <fcntl.h>
 #include <stdlib.h>
 
@@ -68,6 +68,13 @@ static size_t	check_position(char *str)
 	return (1);
 }
 
+static char		*free_and_ret(char **ret, char **buf)
+{
+	free(*ret);
+	free(*buf);
+	return (NULL);
+}
+
 static char		*read_and_check(int fd)
 {
 	char	*ret;
@@ -83,7 +90,7 @@ static char		*read_and_check(int fd)
 		if (n % 5 == 0)
 			num = 0;
 		if (!check_line(n, buf, &num))
-			return (NULL);
+			return (free_and_ret(&ret, &buf));
 		n++;
 		tmp = ret;
 		ret = ft_strjoin(ret, buf);
@@ -91,7 +98,8 @@ static char		*read_and_check(int fd)
 		free(tmp);
 	}
 	if (ft_strlen(ret) % 16 || n % 5 != 4 || n > 129)
-		return (NULL);
+		return (free_and_ret(&ret, &buf));
+	free(buf);
 	return (ret);
 }
 

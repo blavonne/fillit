@@ -6,11 +6,11 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 20:35:15 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/24 19:43:00 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/11/05 11:15:23 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
+#include "fillit.h"
 
 static int	*get_code(const char *figure)
 {
@@ -68,21 +68,21 @@ static int	*move_up_left(int *code)
 	return (code);
 }
 
-static void	set_width(t_figure **tmp, int *code)
+static int	set_height(t_figure **tmp, int *code)
 {
 	int		i;
-	int		width;
+	char	*height;
 
-	i = 0;
-	width = 0;
+	i = 1;
+	if (!(height = (char *)malloc(sizeof(char) * 3 + 1)))
+		return (0);
 	while (i < 4)
 	{
-		if ((code[i] % 4) > width)
-			width = code[i] % 4;
+		height[i - 1] = code[0] / 4 - code[i] / 4 + '0';
 		i++;
 	}
-	width++;
-	(*tmp)->width = width;
+	(*tmp)->height = height;
+	return (1);
 }
 
 int			set_code(t_figure **head, char *figures, int board_len)
@@ -98,7 +98,8 @@ int			set_code(t_figure **head, char *figures, int board_len)
 		if (!(code = get_code(figures)))
 			return (0);
 		code = move_up_left(code);
-		set_width(&tmp, code);
+		if (!(set_height(&tmp, code)))
+			return (0);
 		if (board_len != 4)
 			code = recode(code, board_len);
 		tmp->code = ft_memcpy(tmp->code, code, sizeof(int) * 4);

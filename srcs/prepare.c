@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solvation.c                                        :+:      :+:    :+:   */
+/*   prepare.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/30 19:20:14 by blavonne          #+#    #+#             */
-/*   Updated: 2019/10/24 19:43:00 by blavonne         ###   ########.fr       */
+/*   Created: 2019/11/05 09:58:04 by blavonne          #+#    #+#             */
+/*   Updated: 2019/11/05 09:58:04 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
+#include "fillit.h"
 
 static char	*generate_board(int board_len)
 {
