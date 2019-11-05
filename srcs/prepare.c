@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 09:58:04 by blavonne          #+#    #+#             */
-/*   Updated: 2019/11/05 09:58:04 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/11/05 12:48:54 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,4 @@ int			prepare_input(char **figures, t_solution **shead, t_figure **fhead,
 	if (!(*shead = create_solution_head(board, board_len)))
 		return (0);
 	return (1);
-}
-
-void		clean_all(t_solution **shead, t_figure **fhead)
-{
-	t_solution	*stmp;
-	t_figure	*ftmp;
-
-	while (*shead)
-	{
-		stmp = *shead;
-		(*shead) = (*shead)->up;
-		free(stmp->board);
-		free(stmp);
-	}
-	*shead = NULL;
-	while (*fhead)
-	{
-		ftmp = *fhead;
-		(*fhead) = (*fhead)->next;
-		free(ftmp->code);
-		free(ftmp->height);
-		free(ftmp);
-	}
-	*fhead = NULL;
 }

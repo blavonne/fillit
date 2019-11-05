@@ -6,12 +6,13 @@
 #    By: blavonne <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/13 18:35:48 by blavonne          #+#    #+#              #
-#    Updated: 2019/10/29 18:00:07 by azomega          ###   ########.fr        #
+#    Updated: 2019/11/05 15:31:14 by blavonne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = ./srcs/checks.c ./srcs/figures_code.c ./srcs/main.c ./srcs/prepare.c\
-	 ./srcs/read.c ./srcs/solution.c ./srcs/t_figure.c ./srcs/t_solution.c
+	 ./srcs/read.c ./srcs/solution.c ./srcs/t_figure.c ./srcs/t_solution.c\
+	 ./srcs/clean.c
 OBJ = $(SRC:%.c=%.o)
 
 INCLUDES = ./includes

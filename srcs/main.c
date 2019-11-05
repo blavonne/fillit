@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 17:37:41 by blavonne          #+#    #+#             */
-/*   Updated: 2019/11/05 12:51:02 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/11/05 12:52:35 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ static void	validation(int argc, char **argv, char **figures)
 
 int			main(int argc, char **argv)
 {
-	char		*figures;
-	char		*solve;
-	int			board_len;
-	t_solution	*shead;
-	t_figure	*fhead;
+	char				*figures;
+	char				*solve;
+	int					board_len;
+	t_solution			*shead;
+	t_figure			*fhead;
 
 	shead = NULL;
 	fhead = NULL;
