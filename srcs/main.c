@@ -6,7 +6,7 @@
 /*   By: blavonne <blavonne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 17:37:41 by blavonne          #+#    #+#             */
-/*   Updated: 2019/11/05 10:43:33 by blavonne         ###   ########.fr       */
+/*   Updated: 2019/11/05 12:51:02 by blavonne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static void	validation(int argc, char **argv, char **figures)
 	if (argc != 2)
 	{
 		put_usage();
-		exit(0);
+		exit(1);
 	}
 	if (!(*figures = open_and_read(argv[1])))
 	{
 		ft_putstr("error\n");
-		exit(111);
+		exit(0);
 	}
 }
 
